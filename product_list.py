@@ -15,7 +15,7 @@ products_url = "https://www.amazon.in/gp/search/ref=sr_pg_1?fst=as%3Aoff&rh=i%3A
 
 min_pages = 1
 max_pages = 20
-f = open("products.csv","w+")
+f = open("products.csv", "w+")
 
 parsed = {}
 
@@ -32,7 +32,8 @@ for page in range(min_pages, max_pages + 1):
         title = item['title']
         print('\t{}'.format(title))
         if not title in parsed:
-            parsed[title] = True
             href = item['href']
-            f.write("{title}|@|{href}".format(title=title, href=href))
-        
+            href = href[0: href.index('/ref')]
+            if href.startswith('http'):
+                parsed[title] = True
+                f.write("{href}|@|{title}\n".format(title=title, href=href))
