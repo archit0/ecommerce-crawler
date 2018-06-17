@@ -30,6 +30,6 @@ while True:
     for each_row in rows:
         for each_product in each_row.children:
             ele = each_product.findAll('a')[1]
-            href = 'https://www.flipkart.com/{}'.format(ele['href'])
+            href = 'https://www.flipkart.com{}'.format(ele['href'])
             title = ele.text
             f.write("{href}|@|{title}\n".format(title=title, href=href))
