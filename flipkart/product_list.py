@@ -19,7 +19,7 @@ parsed = {}
 page = 1
 while True:
 
-    print('Product Page: {}'.format(page))
+    print('Product Page: {page}'.format(page=page))
     product_page_url = products_url.format(page=page)
     page += 1
     source = requests.get(product_page_url, headers=HEADERS).content
