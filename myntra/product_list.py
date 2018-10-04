@@ -24,7 +24,7 @@ while True:
             print("OVER")
             break
         for each_product in json['data']['results']['products']:
-            href = "https://myntra.com/{}".format(each_product['dre_landing_page_url'])
+            href = "https://myntra.com/{landing_page}".format(landing_page=each_product['dre_landing_page_url'])
             title = each_product['product']
             if title not in title_dict:
                 f.write("{href}|@|{title}\n".format(title=title, href=href))
