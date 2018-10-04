@@ -20,7 +20,7 @@ f = open("products.csv", "w+")
 parsed = {}
 
 for page in range(min_pages, max_pages + 1):
-    print('Product Page: {}'.format(page))
+    print('Product Page: {page}'.format(page=page))
 
     product_page_url = products_url.format(page=page)
 
@@ -30,7 +30,7 @@ for page in range(min_pages, max_pages + 1):
     for each_product in all_products:
         item = each_product.find('a', class_=PRODUCTS_CLASS_NAME)
         title = item['title']
-        print('\t{}'.format(title))
+        print('\t{title}'.format(title=title))
         if not title in parsed:
             href = item['href']
             href = href[0: href.index('/ref')]
