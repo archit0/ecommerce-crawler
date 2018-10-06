@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="recommerce-crawler",
+    name="ecommerce-crawler",
     version="0.1",
     author="Archit Dwivedi",
     author_email="architdwivedi@@gmail.com",
