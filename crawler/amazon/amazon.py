@@ -45,7 +45,7 @@ def get_data(keyword):
 
                     if price:
                         price = price.text
-                        price = price.repalce(',', "")
+                        price = price.replace(',', "")
                         price = price.strip()
                     reviews = get_review(href, title)
 
