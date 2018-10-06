@@ -41,8 +41,18 @@ def get_data(keyword):
                 href = href[0: href.index('/ref')]
                 if href.startswith('http'):
                     print('\t{title}'.format(title=title))
+                    price = each_product.find('span', class_='s-price')
+
+                    if price:
+                        price = price.text
+                        price = price.repalce(',', "")
+                        price = price.strip()
                     reviews = get_review(href, title)
-                    parsed[title] = reviews
+
+                    parsed[title] = {
+                        'reviews': reviews,
+                        'price': price,
+                    }
 
         page += 1
     return parsed
