@@ -41,7 +41,7 @@ def get_data(keyword):
                 href = href[0: href.index('/ref')]
                 if href.startswith('http'):
                     print('\t{title}'.format(title=title))
-                    price = each_product.find('span', class_='s-price')
+                    price = each_product.find('span', class_='a-color-price')
 
                     if price:
                         price = price.text
