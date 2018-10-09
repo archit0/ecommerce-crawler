@@ -1,11 +1,6 @@
 from crawler.amazon import amazon
-import sys
-import warnings
 
-if not sys.warnoptions:
-    warnings.simplefilter("ignore")
-
-keyword = '<ENTER YOUR KEYWORD HERE>'
+keyword = 'ao smith water purifier'
 
 product_data = amazon.get_data(keyword)
 

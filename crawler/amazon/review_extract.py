@@ -13,6 +13,7 @@ def get_review(url, title):
         url[0: end_index],
         url[end_index + 4:]
     )
+
     page_num = 1
     total_reviews = 0
     while True:
@@ -49,8 +50,21 @@ def get_review(url, title):
                     'span',
                     class_='review-text'
                 ).text.replace('\n', ' ')
+                auth = each_review.find(
+                    'a',
+                    class_='author'
+                )
+                auth_name = None
+                auth_profile_url = None
+                if auth:
+                    auth_name = auth.text
+                    auth_profile_url = "https://www.amazon.in{}".format(auth['href'])
                 output.append(
                     {
+                        'author': {
+                            'name': auth_name,
+                            'profile_url': auth_profile_url
+                        },
                         'title': title,
                         'review_title': review_title,
                         'rating': rating,
