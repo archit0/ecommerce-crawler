@@ -14,13 +14,13 @@ HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
 
 
-def get_data(keyword, domain='in'):
+def get_data(keyword, domain='in', max_page=float("inf"), max_products=float("inf")):
     TEMPLATE_URL = "https://www.amazon.{domain}/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords={keyword}&page={page}"
 
     parsed = {}
     page = 1
-
-    while True:
+    total_products = 0
+    while page < 99999 and total_products < max_products:
         print('Product Page: {page}'.format(page=page))
 
         product_page_url = TEMPLATE_URL.format(page=page, keyword=keyword, domain=domain)
@@ -40,6 +40,7 @@ def get_data(keyword, domain='in'):
                 href = item['href']
                 href = href[0: href.index('/ref')]
                 if href.startswith('http'):
+                    total_products += 1
                     print('\t{title}'.format(title=title))
                     price = each_product.find('span', class_='a-color-price')
 
@@ -47,12 +48,20 @@ def get_data(keyword, domain='in'):
                         price = price.text
                         price = price.replace(',', "")
                         price = price.strip()
+                        if len(price) > 0:
+                            try:
+                                int(price[0])
+                            except:
+                                price = price[1:]
+
                     reviews = get_review(href, title)
 
                     parsed[title] = {
                         'reviews': reviews,
                         'price': price,
                     }
+            if total_products >= max_products:
+                break
 
         page += 1
     return parsed
