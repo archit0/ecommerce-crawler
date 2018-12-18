@@ -20,7 +20,7 @@ def get_data(keyword, domain='in', max_page=float("inf"), max_products=float("in
     parsed = {}
     page = 1
     total_products = 0
-    while page < 99999 and total_products < max_products:
+    while page < max_page and total_products < max_products:
         print('Product Page: {page}'.format(page=page))
 
         product_page_url = TEMPLATE_URL.format(page=page, keyword=keyword, domain=domain)
