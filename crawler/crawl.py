@@ -1,6 +1,6 @@
 from crawler.amazon import amazon
 
-keyword = 'ao smith water purifier'
+keyword = '<INSERT YOUR KEYWORD>'
 
 product_data = amazon.get_data(keyword)
 

@@ -14,8 +14,8 @@ HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
 
 
-def get_data(keyword):
-    TEMPLATE_URL = "https://www.amazon.in/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords={keyword}&page={page}"
+def get_data(keyword, domain='in'):
+    TEMPLATE_URL = "https://www.amazon.{domain}/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords={keyword}&page={page}"
 
     parsed = {}
     page = 1
@@ -23,7 +23,7 @@ def get_data(keyword):
     while True:
         print('Product Page: {page}'.format(page=page))
 
-        product_page_url = TEMPLATE_URL.format(page=page, keyword=keyword)
+        product_page_url = TEMPLATE_URL.format(page=page, keyword=keyword, domain=domain)
         print(product_page_url)
 
         source = requests.get(product_page_url, headers=HEADERS).content
