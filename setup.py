@@ -22,5 +22,5 @@ setuptools.setup(
         'Operating System :: OS Independent',
         'License :: Non-Free',
         'Topic :: Software Development :: Libraries :: Python Modules'],
-    install_requires=['bs4==0.0.1', 'requests==2.19.1', ],
+    install_requires=['bs4==0.0.1', 'requests==2.21.0', ],
 )
