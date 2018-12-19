@@ -3,7 +3,6 @@ sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf8', buffering=1)
 
 from crawler.amazon import amazon
 
-keyword = 'fiber supplements'
 
 config = {
     'co.uk': {
@@ -42,13 +41,13 @@ responses = {}
 for each_domain, domain_keywords in config.items():
     for each_keyword in domain_keywords:
         domain_keywords[each_keyword] = amazon.get_data(
-            keyword=keyword,
+            keyword=each_keyword,
             domain=each_domain,
             max_page=1
         )
 
 
-file_name = "{}.json".format(keyword.replace(' ', '_').lower().strip())
+file_name = "{}.json".format('Resp')
 
 import json
 
