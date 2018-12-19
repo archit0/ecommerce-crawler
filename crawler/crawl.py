@@ -4,7 +4,7 @@ keyword = 'fiber supplements'
 
 config = {
     'co.uk': {
-        'fiber supplements': {},
+        'Benefiber': {},
         'Citrucel': {},
         'Garden of Life Raw Fiber': {},
         'Optimum Nutrition': {},
