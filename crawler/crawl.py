@@ -1,3 +1,6 @@
+import sys
+sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf8', buffering=1)
+
 from crawler.amazon import amazon
 
 keyword = 'fiber supplements'
