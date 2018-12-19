@@ -1,7 +1,7 @@
-import requests
 import warnings
 from bs4 import BeautifulSoup
 
+from .utils import get
 from .review_extract import get_review
 from .questions_extract import get_questions
 # Loggers and warning
@@ -11,22 +11,24 @@ warnings.filterwarnings("ignore", category=UserWarning, module='bs4')
 ITEM_CONTAINER = 's-item-container'
 PRODUCTS_CLASS_NAME = 's-access-detail-page'
 HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'
+}
 
 
 def get_data(keyword, domain='in', max_page=float("inf"), max_products=float("inf")):
     TEMPLATE_URL = "https://www.amazon.{domain}/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords={keyword}&page={page}"
 
     parsed = {}
-    page = 1
+    page = 0
     total_products = 0
-    while page < max_page and total_products < max_products:
+    while total_products < max_products:
+        page += 1
         print('Product Page: {page}'.format(page=page))
 
         product_page_url = TEMPLATE_URL.format(page=page, keyword=keyword, domain=domain)
         print(product_page_url)
 
-        source = requests.get(product_page_url, headers=HEADERS).content
+        source = get(product_page_url)
         soup = BeautifulSoup(source)
         all_products = soup.findAll('div', class_=ITEM_CONTAINER)
         if not all_products:
@@ -63,5 +65,4 @@ def get_data(keyword, domain='in', max_page=float("inf"), max_products=float("in
             if total_products >= max_products:
                 break
 
-        page += 1
     return parsed

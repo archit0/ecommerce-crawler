@@ -1,10 +1,9 @@
-import requests
+
 from bs4 import BeautifulSoup
 from bs4.element import Tag
 
-HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'
-}
+from .utils import get
+
 
 
 def get_questions(href):
@@ -18,12 +17,7 @@ def get_questions(href):
     output = []
     while True:
         f_url = url.format(page=page)
-        soup = BeautifulSoup(
-            requests.get(
-                f_url,
-                headers=HEADERS
-            ).content
-        )
+        soup = BeautifulSoup(get(f_url))
         print("\t\tPage: {}".format(page))
         questions = soup.find('div', class_='askTeaserQuestions')
         if not questions:
@@ -49,12 +43,8 @@ def get_questions(href):
 
 def get_answer(url):
 
-    soup = BeautifulSoup(
-        requests.get(
-            url,
-            headers=HEADERS
-        ).content
-    )
+    soup = BeautifulSoup(get(url))
+
     response = []
     sections = soup.findAll('div', class_='a-section')
     for each in sections:

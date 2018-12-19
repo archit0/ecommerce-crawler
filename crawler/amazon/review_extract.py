@@ -1,12 +1,8 @@
-import requests
+from .utils import get
 from bs4 import BeautifulSoup
 
-HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'
-}
 
-
-def get_review(url, title):
+def get_review(url, title=None):
     output = []
     end_index = url.rfind('/dp/')
     review_url = "{}/product-reviews/{}".format(
@@ -18,12 +14,7 @@ def get_review(url, title):
     total_reviews = 0
     while True:
         review_page_url = "{}?pageNumber={}".format(review_url, page_num)
-        soup = BeautifulSoup(
-            requests.get(
-                review_page_url,
-                headers=HEADERS
-            ).content
-        )
+        soup = BeautifulSoup(get(review_page_url))
         reviews = soup.findAll('div', class_='review')
         if len(reviews) <= 0:
             break
