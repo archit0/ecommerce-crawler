@@ -45,7 +45,6 @@ for each_domain, domain_keywords in config.items():
             domain=each_domain,
             max_page=1
         )
-        break
 
 
 file_name = "{}.json".format('Resp')
