@@ -45,6 +45,7 @@ for each_domain, domain_keywords in config.items():
             domain=each_domain,
             max_page=1
         )
+        break
 
 
 file_name = "{}.json".format('Resp')
@@ -52,4 +53,4 @@ file_name = "{}.json".format('Resp')
 import json
 
 f = open(file_name, "w+")
-f.write(json.dumps(responses))
+f.write(json.dumps(config))
