@@ -34,35 +34,38 @@ def get_data(keyword, domain='in', max_page=float("inf"), max_products=float("in
         if not all_products:
             break
         for each_product in all_products:
-            item = each_product.find('a', class_=PRODUCTS_CLASS_NAME)
-            if not item:
-                continue
-            title = item['title']
-            if title not in parsed:
-                href = item['href']
-                href = href[0: href.index('/ref')]
-                if href.startswith('http'):
-                    total_products += 1
-                    print('\t{title}'.format(title=title))
-                    price = each_product.find('span', class_='a-color-price')
+            try:
+                item = each_product.find('a', class_=PRODUCTS_CLASS_NAME)
+                if not item:
+                    continue
+                title = item['title']
+                if title not in parsed:
+                    href = item['href']
+                    href = href[0: href.index('/ref')]
+                    if href.startswith('http'):
+                        total_products += 1
+                        print('\t{title}'.format(title=title))
+                        price = each_product.find('span', class_='a-color-price')
 
-                    if price:
-                        price = price.text
-                        price = price.replace(',', "")
-                        price = price.strip()
-                        if len(price) > 0:
-                            try:
-                                int(price[0])
-                            except:
-                                price = price[1:]
+                        if price:
+                            price = price.text
+                            price = price.replace(',', "")
+                            price = price.strip()
+                            if len(price) > 0:
+                                try:
+                                    int(price[0])
+                                except:
+                                    price = price[1:]
 
 
-                    parsed[title] = {
-                        'reviews': get_review(href, title),
-                        'questions': get_questions(href),
-                        'price': price,
-                    }
-            if total_products >= max_products:
-                break
+                        parsed[title] = {
+                            'reviews': get_review(href, title),
+                            'questions': get_questions(href),
+                            'price': price,
+                        }
+                if total_products >= max_products:
+                    break
+            except:
+                print("Exception occured")
 
     return parsed
