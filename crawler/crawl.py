@@ -41,7 +41,7 @@ responses = {}
 for each_domain, domain_keywords in config.items():
     for each_keyword in domain_keywords:
         domain_keywords[each_keyword] = amazon.get_data(
-            keyword=each_keyword,
+            keyword="{} {}".format(each_keyword, "fiber supplement"),
             domain=each_domain,
             max_page=1
         )
