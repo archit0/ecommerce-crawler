@@ -3,7 +3,7 @@ import warnings
 from bs4 import BeautifulSoup
 
 from .review_extract import get_review
-
+from .questions_extract import get_questions
 # Loggers and warning
 warnings.filterwarnings("ignore", category=UserWarning, module='bs4')
 
@@ -54,10 +54,10 @@ def get_data(keyword, domain='in', max_page=float("inf"), max_products=float("in
                             except:
                                 price = price[1:]
 
-                    reviews = get_review(href, title)
 
                     parsed[title] = {
-                        'reviews': reviews,
+                        'reviews': get_review(href, title),
+                        'questions': get_questions(href),
                         'price': price,
                     }
             if total_products >= max_products:
