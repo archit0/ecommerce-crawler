@@ -1,53 +1,79 @@
 import sys
+
 sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf8', buffering=1)
 
 from crawler.amazon import amazon
-
+from crawler.amazon import utils
 
 config = {
     'co.uk': {
         'Benefiber': {},
-        'Citrucel': {},
-        'Garden of Life Raw Fiber': {},
-        'Optimum Nutrition': {},
         'Metamucil': {},
         'Yerba': {},
+        'Now': {},
         'Renew Life': {},
-        'Now Fiber': {},
+        'Garden of Life': {},
+        'Citrucel': {},
+        'Optimum Nutrition': {},
+        'Vitacost': {},
+        'Equate': {},
+        'Kirkland': {},
+        'Organic India': {},
+        'Wellpath': {},
+        'Care/Of': {},
+        'Baze': {},
+        'Zenamins': {},
     },
     'in': {
         'Benefiber': {},
-        'Citrucel': {},
-        'Garden of Life Raw Fiber': {},
-        'Optimum Nutrition': {},
         'Metamucil': {},
         'Yerba': {},
+        'Now': {},
         'Renew Life': {},
-        'Now Fiber': {},
-        'Organic India Fiber': {},
+        'Garden of Life': {},
+        'Citrucel': {},
+        'Optimum Nutrition': {},
+        'Vitacost': {},
+        'Equate': {},
+        'Kirkland (Costco)': {},
+        'Organic India': {},
+        'Wellpath': {},
+        'Care/Of': {},
+        'Baze': {},
+        'Zenamins': {},
     },
     'com': {
         'Benefiber': {},
-        'Citrucel': {},
-        'Garden of Life Raw Fiber': {},
-        'Optimum Nutrition': {},
-        'Metamucil': {},
+        'metamucil': {},
         'Yerba': {},
+        'Now': {},
         'Renew Life': {},
-        'Now Fiber': {},
+        'Garden of Life': {},
+        'Citrucel': {},
+        'Optimum Nutrition': {},
+        'Vitacost': {},
+        'Equate': {},
+        'Kirkland (Costco)': {},
+        'Organic India': {},
+        'Wellpath': {},
+        'Care/Of': {},
+        'Baze': {},
+        'Zenamins': {},
     }
 }
+
 responses = {}
 for each_domain, domain_keywords in config.items():
     for each_keyword in domain_keywords:
+        utils.reset()
         domain_keywords[each_keyword] = amazon.get_data(
-            keyword="{} {}".format(each_keyword, "fiber supplement"),
+            keyword=each_keyword,
+            k2=" husk" if each_keyword == "Organic India" else "fiber supplement",
             domain=each_domain,
-            max_page=1
+            max_page=2
         )
 
-
-file_name = "{}.json".format('Resp')
+file_name = "{}.json".format('com')
 
 import json
 
