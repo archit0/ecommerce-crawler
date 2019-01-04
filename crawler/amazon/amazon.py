@@ -15,7 +15,7 @@ HEADERS = {
 }
 
 
-def get_data(keyword, domain='in', max_page=float("inf"), max_products=float("inf")):
+def get_data(keyword, k2, domain='in', max_page=float("inf"), max_products=float("inf")):
     TEMPLATE_URL = "https://www.amazon.{domain}/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords={keyword}&page={page}"
 
     parsed = {}
@@ -23,14 +23,17 @@ def get_data(keyword, domain='in', max_page=float("inf"), max_products=float("in
     total_products = 0
     while total_products < max_products:
         page += 1
+        if page > max_page:
+            break
         print('Product Page: {page}'.format(page=page))
 
-        product_page_url = TEMPLATE_URL.format(page=page, keyword=keyword, domain=domain)
+        product_page_url = TEMPLATE_URL.format(page=page, keyword="{} {}".format(keyword, k2), domain=domain)
         print(product_page_url)
 
         source = get(product_page_url)
         soup = BeautifulSoup(source)
         all_products = soup.findAll('div', class_=ITEM_CONTAINER)
+
         if not all_products:
             break
         for each_product in all_products:
@@ -39,33 +42,60 @@ def get_data(keyword, domain='in', max_page=float("inf"), max_products=float("in
                 if not item:
                     continue
                 title = item['title']
+
+                if keyword.lower() not in title.lower() :
+                    continue
+
+                if 'fiber' not in title.lower() and 'husk' not in title.lower() and 'fibre' not in title.lower():
+                    continue
                 if title not in parsed:
                     href = item['href']
                     href = href[0: href.index('/ref')]
                     if href.startswith('http'):
                         total_products += 1
                         print('\t{title}'.format(title=title))
-                        price = each_product.find('span', class_='a-color-price')
-
-                        if price:
-                            price = price.text
-                            price = price.replace(',', "")
-                            price = price.strip()
-                            if len(price) > 0:
-                                try:
-                                    int(price[0])
-                                except:
-                                    price = price[1:]
-
 
                         parsed[title] = {
                             'reviews': get_review(href, title),
                             'questions': get_questions(href),
-                            'price': price,
+                            'price': None,
                         }
+                    else:
+                        tt = 1
+                        b = 1
+                        pass
                 if total_products >= max_products:
                     break
             except:
                 print("Exception occured")
+        print("-------------------------------------")
+        all_products = soup.findAll('div', class_='desktopSparkle__asinContainer')
+        for each_product in all_products:
+            try:
 
+                title = each_product.text
+
+                if keyword.lower() not in title.lower():
+                    continue
+
+                if 'fiber' not in title.lower() and 'husk' not in title.lower() and 'fibre' not in title.lower():
+                    continue
+                if title not in parsed:
+                    print('\t{title}'.format(title=title))
+                    ahr = each_product.find('a')['href']
+                    t = ahr.find('/dp/')  + 4
+                    q = ahr.find('?', t)
+                    id = ahr[t:q]
+                    u = "https://amazon.com/{}/dp/{}/ref=sr_1_4_a_it".format(title, id)
+
+                    parsed[title] = {
+                        'reviews': get_review(u, title),
+                        # 'questions': get_questions(href),
+                        'price': None,
+                    }
+                if total_products >= max_products:
+                    break
+            except:
+                print("Exception occured")
+        break
     return parsed

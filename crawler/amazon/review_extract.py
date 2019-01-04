@@ -5,13 +5,17 @@ from bs4 import BeautifulSoup
 def get_review(url, title=None):
     output = []
     end_index = url.rfind('/dp/')
+    ar = url[0: end_index]
+    ar = ar[0: ar.rfind('/') + 1]
     review_url = "{}/product-reviews/{}".format(
-        url[0: end_index],
+        'https://amazon.com',
         url[end_index + 4:]
     )
 
     page_num = 1
     total_reviews = 0
+    pp = {}
+    stoped = False
     while True:
         review_page_url = "{}?pageNumber={}".format(review_url, page_num)
         soup = BeautifulSoup(get(review_page_url))
@@ -26,11 +30,13 @@ def get_review(url, title=None):
                     'a',
                     class_='review-title',
                 ).contents[0]
-
-                rating = each_review.find(
-                    'a',
-                    class_='a-link-normal'
-                )['title'][0]
+                try:
+                    rating = each_review.find(
+                        'a',
+                        class_='a-link-normal'
+                    )['title'][0]
+                except:
+                    rating = None
 
                 date = each_review.find(
                     'span',
@@ -50,6 +56,13 @@ def get_review(url, title=None):
                 if auth:
                     auth_name = auth.text
                     auth_profile_url = "https://www.amazon.in{}".format(auth['href'])
+
+                if not auth_name:
+                    auth_name = each_review.find('div', class_='a-profile-content')
+                    if auth_name:
+                        auth_name = auth_name.text
+                    else:
+                        auth_name = None
                 output.append(
                     {
                         'author': {
@@ -63,6 +76,11 @@ def get_review(url, title=None):
                         'review_data': review_data,
                     }
                 )
+                key = "{}_{}".format(review_title, review_data)
+                if key in pp:
+                    stoped =  True
+                    break
+                pp[key] = {}
 
             except Exception as e:
                 print(e)
