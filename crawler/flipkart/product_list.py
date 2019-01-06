@@ -11,7 +11,7 @@ ITEM_CONTAINER = 's-item-container'
 PRODUCTS_CLASS_NAME = 's-access-detail-page'
 HEADERS = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
 
-products_url = "https://www.flipkart.com/search?q=wildcraft&marketplace=FLIPKART&otracker=start&as-show=on&as=off&page={page}"
+products_url = "https://www.flipkart.com/search?q=fiber%20supplement&otracker=search&otracker1=search&marketplace=FLIPKART&as-show=on&as=off&page={page}"
 
 f = open("products.csv", "w+")
 

@@ -3,7 +3,7 @@ import sys
 sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf8', buffering=1)
 
 from crawler.amazon import amazon
-from crawler.amazon import utils
+from crawler import utils
 
 config = {
     'co.uk': {
@@ -24,42 +24,42 @@ config = {
         'Baze': {},
         'Zenamins': {},
     },
-    'in': {
-        'Benefiber': {},
-        'Metamucil': {},
-        'Yerba': {},
-        'Now': {},
-        'Renew Life': {},
-        'Garden of Life': {},
-        'Citrucel': {},
-        'Optimum Nutrition': {},
-        'Vitacost': {},
-        'Equate': {},
-        'Kirkland (Costco)': {},
-        'Organic India': {},
-        'Wellpath': {},
-        'Care/Of': {},
-        'Baze': {},
-        'Zenamins': {},
-    },
-    'com': {
-        'Benefiber': {},
-        'metamucil': {},
-        'Yerba': {},
-        'Now': {},
-        'Renew Life': {},
-        'Garden of Life': {},
-        'Citrucel': {},
-        'Optimum Nutrition': {},
-        'Vitacost': {},
-        'Equate': {},
-        'Kirkland (Costco)': {},
-        'Organic India': {},
-        'Wellpath': {},
-        'Care/Of': {},
-        'Baze': {},
-        'Zenamins': {},
-    }
+    # 'in': {
+    #     'Benefiber': {},
+    #     'Metamucil': {},
+    #     'Yerba': {},
+    #     'Now': {},
+    #     'Renew Life': {},
+    #     'Garden of Life': {},
+    #     'Citrucel': {},
+    #     'Optimum Nutrition': {},
+    #     'Vitacost': {},
+    #     # 'Equate': {},
+    #     # 'Kirkland (Costco)': {},
+    #     'Organic India': {},
+    #     'Wellpath': {},
+    #     # 'Care Of': {},
+    #     # 'Baze': {},
+    #     # 'Zenamins': {},
+    # },
+    # 'com': {
+    #     'Benefiber': {},
+    #     'metamucil': {},
+    #     'Yerba': {},
+    #     'Now': {},
+    #     'Renew Life': {},
+    #     'Garden of Life': {},
+    #     'Citrucel': {},
+    #     'Optimum Nutrition': {},
+    #     'Vitacost': {},
+    #     'Equate': {},
+    #     'Kirkland (Costco)': {},
+    #     'Organic India': {},
+    #     'Wellpath': {},
+    #     'Care/Of': {},
+    #     'Baze': {},
+    #     'Zenamins': {},
+    # }
 }
 
 responses = {}
@@ -73,7 +73,7 @@ for each_domain, domain_keywords in config.items():
             max_page=2
         )
 
-file_name = "{}.json".format('com')
+file_name = "{}.json".format('co_uk_quest')
 
 import json
 

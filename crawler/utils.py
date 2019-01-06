@@ -15,7 +15,8 @@ browser = webdriver.Chrome(executable_path='/Users/architdwivedi/Downloads/chrom
 
 
 def get(url):
-    browser.execute_script("window.stop();")
     browser.get(url)
+    browser.execute_script("window.stop();")
+
     html_source = browser.page_source
     return html_source

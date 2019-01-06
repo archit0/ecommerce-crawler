@@ -1,4 +1,4 @@
-from .utils import get
+from crawler.utils import get
 from bs4 import BeautifulSoup
 
 
